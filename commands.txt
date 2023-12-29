@@ -21,3 +21,5 @@ stop : docker stop webserver
 see all the containers running : docker ps -a
 
 delete image : docker image rm nginx
+
+enter to docker container: docker exec -it <container_name> bash
