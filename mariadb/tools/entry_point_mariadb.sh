@@ -1,35 +1,22 @@
 #!/bin/bash
 
-# Define the actual root password
-ROOT_PASSWORD="12345"
-
-# Path to the original SQL script
-SQL_SCRIPT="/secure_init_db.sql"
-
-# Create a temporary file to store modified SQL
-TEMP_SQL="/temp_secure_init_db.sql"
-
-# Replace placeholder with actual password in the SQL script
-sed "s/{{ROOT_PASSWORD}}/$ROOT_PASSWORD/g" "$SQL_SCRIPT" > "$TEMP_SQL"
-
-
-# # Run mysqld with the modified SQL script
-# mysqld --bootstrap --init-file="$TEMP_SQL"
-
-
-mysqld --bootstrap --init-file="$TEMP_SQL"
-rm "$TEMP_SQL"
-
-echo "Starting MariaDB service..."
-
-# Start MariaDB service
+# Start MariaDB
 service mariadb start
 
+# Remove anonymous users
+mysql -u root -p -e "DELETE FROM mysql.user WHERE User='';"
 
-# Wait for MariaDB service to start (optional)
-# This sleep command gives some time for MariaDB to start, adjust as needed
-sleep 10
+# Disallow root login remotely
+mysql -u root -p -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
 
-mysql -u root -p"12345" -e "SHOW DATABASES;"
+# Remove test database
+mysql -u root -p -e "DROP DATABASE IF EXISTS test;"
 
-# cat /etc/mysql/my.cnf
+# Remove privileges related to the test database
+mysql -u root -p -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';"
+
+mysql -u root -p -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '089765';"
+
+mysqladmin -u root -p'089765' shutdown
+
+exec mysqld_safe

@@ -1,5 +1,5 @@
 -- Set root password
-ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ROOT_PASSWORD}}';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '089765';
 
 -- Remove anonymous users
 DELETE FROM mysql.user WHERE User='';
