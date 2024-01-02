@@ -5,10 +5,13 @@ FROM debian:bullseye
 RUN apt-get update && apt-get install -y mariadb-server
 
 # *** Copy configuration file ***
-COPY ./conf/my.cnf /etc/mysql/my.cnf
+# COPY ./conf/my.cnf /etc/mysql/my.cnf
 
-# *** Copy entrypoint script ***
+# *** Copy entrypoint bash script ***
 COPY ./tools/entry_point_mariadb.sh /entry_point_mariadb.sh
+
+# *** Copy sql script that performs the behavior of `mysql_secure_installation` ***
+COPY ./tools/secure_init_db.sql /secure_init_db.sql
 
 # Making the ENTRYPOINT Script executable
 RUN chmod +x /entry_point_mariadb.sh
