@@ -39,8 +39,10 @@ mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ROOT_PASSWORD';"
 # Save the privileges
 mysql -uroot -p${ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 
+cat /etc/mysql/mariadb.conf.d/50-server.cnf
+
 mysqladmin -uroot -p${ROOT_PASSWORD} shutdown
 
 echo "=> MariaDB database and user were created successfully! "
 
-exec mysqld
+# exec mysqld
