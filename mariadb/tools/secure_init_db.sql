@@ -1,6 +1,3 @@
--- Set root password
-ALTER USER 'root'@'localhost' IDENTIFIED BY '089765';
-
 -- Remove anonymous users
 DELETE FROM mysql.user WHERE User='';
 
@@ -12,6 +9,3 @@ DROP DATABASE IF EXISTS test;
 
 -- Remove privileges related to the test database
 DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
-
--- Flush privileges to apply changes
-FLUSH PRIVILEGES;

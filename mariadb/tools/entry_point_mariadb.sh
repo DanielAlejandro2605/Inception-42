@@ -1,22 +1,46 @@
 #!/bin/bash
 
+ROOT_PASSWORD="089765"
+WP_USER_NAME="toto"
+WP_USER_PASSWORD="totoisthebest"
+WP_DATABASE_NAME="wordpress"
+
+# Path to the original SQL script
+SQL_SCRIPT="/secure_init_db.sql"
+
+# Run mysqld with the modified SQL script
+mysqld --bootstrap --init-file="$SQL_SCRIPT"
+
 # Start MariaDB
 service mariadb start
+sleep 2
 
-# Remove anonymous users
-mysql -u root -p -e "DELETE FROM mysql.user WHERE User='';"
+# Create database for wordpress
+echo " (*) Creating ${WP_DATABASE_NAME} database ..."
+mysql -e "CREATE DATABASE IF NOT EXISTS $WP_DATABASE_NAME;"
 
-# Disallow root login remotely
-mysql -u root -p -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
+# Create user for wordpress database
+echo " (*) Creating user ${WP_USER_NAME} ... "
+# localhost o '%' ?
+mysql -e "CREATE USER '$WP_USER_NAME'@'%' IDENTIFIED BY '$WP_USER_PASSWORD';"
 
-# Remove test database
-mysql -u root -p -e "DROP DATABASE IF EXISTS test;"
+# Grant privileges for wordpress user database to the wordpress database
+echo " (*) Grant privileges for ${WP_USER_NAME} on ${WP_DATABASE_NAME} ... "
+mysql -e "GRANT ALL PRIVILEGES ON $WP_DATABASE_NAME.* TO '$WP_USER_NAME'@'%' IDENTIFIED BY '$WP_USER_PASSWORD';"
 
-# Remove privileges related to the test database
-mysql -u root -p -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';"
+# Save the privileges 
+echo " (*) Flush privileges ... "
+mysql -e "FLUSH PRIVILEGES;"
 
-mysql -u root -p -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '089765';"
+# Set root password
+echo " (*) Setting root password ... "
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ROOT_PASSWORD';"
 
-mysqladmin -u root -p'089765' shutdown
+# Save the privileges
+mysql -uroot -p${ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 
-exec mysqld_safe
+mysqladmin -uroot -p${ROOT_PASSWORD} shutdown
+
+echo "=> MariaDB database and user were created successfully! "
+
+exec mysqld
