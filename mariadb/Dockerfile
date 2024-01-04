@@ -5,7 +5,7 @@ FROM debian:bullseye
 RUN apt-get update && apt-get install -y mariadb-server
 
 # *** Copy configuration file ***
-# COPY ./conf/my.cnf /etc/mysql/my.cnf
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 # *** Copy entrypoint bash script ***
 COPY ./tools/entry_point_mariadb.sh /entry_point_mariadb.sh

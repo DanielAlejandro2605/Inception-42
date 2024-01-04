@@ -8,6 +8,8 @@ WP_DATABASE_NAME="wordpress"
 # Path to the original SQL script
 SQL_SCRIPT="/secure_init_db.sql"
 
+chown -R mysql:mysql /var/lib/mysql
+
 # Run mysqld with the modified SQL script
 mysqld --bootstrap --init-file="$SQL_SCRIPT"
 
@@ -45,4 +47,4 @@ mysqladmin -uroot -p${ROOT_PASSWORD} shutdown
 
 echo "=> MariaDB database and user were created successfully! "
 
-# exec mysqld
+exec mysqld
