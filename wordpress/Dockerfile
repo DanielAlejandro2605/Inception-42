@@ -5,7 +5,8 @@ FROM debian:bullseye
 RUN apt-get update
 
 # Install php
-RUN apt-get install php php-mysql php-fpm php-common php-curl -y
+# RUN apt-get install php php-mysql php-fpm php-common php-curl -y
+RUN apt-get install php php-mysql php-fpm -y
 
 # Install curl
 RUN apt-get install curl -y
