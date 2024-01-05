@@ -12,7 +12,7 @@ stop:
 	@echo "Stopping Inception ..."
 	@docker compose -f $(COMPOSE_FILE) down
 
-debug:
+debug: clean
 	@echo "Launching Inception for debug ..."
 	@docker compose -f $(COMPOSE_FILE) up --build
 
@@ -20,14 +20,14 @@ remove_volumes:
 	@if [ -n "$$(docker volume ls -q)" ]; then \
 		echo "Removing docker volumes ..."; \
 		docker compose -f $(COMPOSE_FILE) down --volumes; \
-		echo "Volumes removed $(GREEN)[ ✔ ]\n$(RESET)"; \
+		echo "Volumes removed $(GREEN)\t\t\t[ ✔ ]$(RESET)"; \
 	else \
 		echo "\n$(BOLD)$(RED)No Docker volumes found.\n$(RESET)"; \
 	fi
 
 
 clean: remove_volumes
-	@echo "Inception cleaned $(GREEN)[ ✔ ]\n$(RESET)"
+	@echo "Inception cleaned $(GREEN)\t\t\t[ ✔ ]$(RESET)"
 	
 header:
 	clear

@@ -19,8 +19,7 @@ RUN chmod +x /entry_point_mariadb.sh
 # Expose the default MariaDB port
 EXPOSE 3306
 
-# CMD ["mysqld", "service", "start"]
-# # Lauch the script after the container is initiated. 
+# Lauch the script after the container is initiated. 
 ENTRYPOINT ["/entry_point_mariadb.sh"]
 
 

@@ -4,18 +4,7 @@ services:
   mariadb:
     container_name : mariadb
     build: ./requirements/mariadb
+    image : mariadb
     ports:
       - 3306:3306
     env_file : .env
-    volumes:
-      - mariadb:/var/lib/mysql
-
-volumes:
-  mariadb:
-    name: ${DATABASE_VOLUME}
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/daniel/data/mariadb
-    
