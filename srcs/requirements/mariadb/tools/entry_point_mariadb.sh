@@ -1,9 +1,10 @@
 #!/bin/bash
 
-ROOT_PASSWORD="089765"
-WP_USER_NAME="toto"
-WP_USER_PASSWORD="totoisthebest"
-WP_DATABASE_NAME="wordpress"
+
+# ROOT_PASSWORD="089765"
+# WP_USER_NAME="toto"
+# WP_USER_PASSWORD="totoisthebest"
+# WP_DATABASE_NAME="wordpress"
 
 # Path to the original SQL script
 SQL_SCRIPT="/secure_init_db.sql"
@@ -36,14 +37,14 @@ mysql -e "FLUSH PRIVILEGES;"
 
 # Set root password
 echo " (*) Setting root password ... "
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ROOT_PASSWORD';"
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIADB_ROOT_USER_PASSWORD';"
 
 # Save the privileges
-mysql -uroot -p${ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
+mysql -uroot -p${MARIADB_ROOT_USER_PASSWORD} -e "FLUSH PRIVILEGES;"
 
-cat /etc/mysql/mariadb.conf.d/50-server.cnf
+# cat /etc/mysql/mariadb.conf.d/50-server.cnf
 
-mysqladmin -uroot -p${ROOT_PASSWORD} shutdown
+mysqladmin -uroot -p${MARIADB_ROOT_USER_PASSWORD} shutdown
 
 echo "=> MariaDB database and user were created successfully! "
 
