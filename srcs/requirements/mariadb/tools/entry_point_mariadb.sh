@@ -41,6 +41,6 @@ mysqladmin -uroot -p${DB_ROOT_USER_PASSWORD} shutdown
 
 echo "=> MariaDB database and user were created successfully! "
 
-cat /etc/mysql/mariadb.conf.d/50-server.cnf
+# cat /etc/mysql/mariadb.conf.d/50-server.cnf
 
 exec mysqld
