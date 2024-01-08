@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y mariadb-server
 
 # RUN	mkdir -p /run/mysqld && chown -R mysql:root /run/mysqld
 
-RUN chown -R mysql:mysql /var/lib/mysql
+# RUN chown -R mysql:mysql /var/lib/mysql
+
 # *** Copy configuration file ***
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 

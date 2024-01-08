@@ -25,8 +25,16 @@ remove_volumes:
 		echo "\n$(BOLD)$(RED)No Docker volumes found.\n$(RESET)"; \
 	fi
 
+remove_images:
+	@if [ -n "$$(docker image ls -q)" ]; then \
+		echo "Removing docker images ..."; \
+		docker compose -f $(COMPOSE_FILE) down --rmi all; \
+		echo "Images removed $(GREEN)\t\t\t\t[ ✔ ]$(RESET)"; \
+	else \
+		echo "\n$(BOLD)$(RED)No Docker volumes found.\n$(RESET)"; \
+	fi
 
-clean: remove_volumes
+clean: remove_volumes remove_images
 	@echo "Inception cleaned $(GREEN)\t\t\t[ ✔ ]$(RESET)"
 	
 header:

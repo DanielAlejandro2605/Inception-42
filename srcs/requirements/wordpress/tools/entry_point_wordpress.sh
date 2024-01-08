@@ -1,36 +1,60 @@
 #!/bin/bash
 
-DB_ROOT_PASSWORD=$MARIADB_ROOT_USER_PASSWORD
-DB_NAME=$WP_DATABASE_NAME
-DB_USER_NAME=$WP_USER_NAME
-DB_USER_PASSWORD=$WP_USER_PASSWORD
+# DB_ROOT_PASSWORD=$MARIADB_ROOT_USER_PASSWORD
+# DB_NAME=$WP_DATABASE_NAME
+# DB_USER_NAME=$WP_USER_NAME
+# DB_USER_PASSWORD=$WP_USER_PASSWORD
 
-echo $DB_ROOT_PASSWORD
-echo $DB_NAME
-echo $DB_USER_NAME
-echo $DB_USER_PASSWORD
+# echo $MARIADB_ROOT_USER_PASSWORD
+# echo $WP_DATABASE_NAME
+# echo $WP_USER_NAME
+# echo $WP_USER_NAME
+
+# Function to test if MariaDB is avalaible
+wait_for_mariadb() {
+    until mysqladmin ping -h"mariadb" -u"toto" -p"totoisthebest" &> /dev/null; do
+        >&2 echo "MariaDB is unavailable - sleeping"
+        sleep 2
+    done
+    >&2 echo "MariaDB is up - executing WordPress setup"
+}
+
+# Waiting for MariaDB
+wait_for_mariadb
+
+mariadb -h"mariadb" -u"toto" -p"totoisthebest" -e "SHOW DATABASES;"
+
+# cd $WP_PATH
+
+# # Downloading wordpress:
+# #   This command creates a  folder inside current working directory and downloads the latest WordPress version.
 
 # echo "Downloading wordpress using wp-cli..."
 
-# # Downloading wordpress:
-# #   This command creates a wpdemo.test/ folder inside current working directory and downloads the latest WordPress version.
-
-# wp-cli core download --path='wpdemo.test' --allow-root
+# wp-cli core download --path=${WP_PATH} --allow-root
 
 # echo "Done!"
-
-# echo "Creating the config file for the database..."
 
 # # Creating config file:
 # #   Generate a config file wp-config.php for set up the database credentials for our installation.
 
-# wp-cli config create     \
-#     --dbhost='localhost' \
-#     --dbname='wordpress' \
-#     --dbuser='daniel'    \
-#     --dbpass='089765'    \
-#     --path='wpdemo.test' \
-#     --allow-root
+# echo "Creating the config file for the database..."
+
+# wp-cli config create    --dbname=${DB_NAME}                     \
+#                         --dbuser=${DB_USER_NAME}                \
+#                         --dbpass=${DB_USER_PASSWORD}            \
+#                         --dbhost=${DB_HOST}                     \
+#                         --path=${WP_PATH}                  \
+#                         --allow-root
+
+# # Creating the site web
+# echo "Creating the site web..."
+
+# wp-cli core install     --url=${WP_DOMAIN_NAME}                 \
+#                         --title=${WP_TITLE}                     \
+#                         --admin_user=${WP_ADMIN_USER}           \
+#                         --admin_password=${WP_ADMIN_PASSWORD}   \
+#                         --admin_email=${WP_ADMIN_EMAIL}         \
+#                         --allow-root
 
 # echo "Done!"
-

@@ -14,7 +14,7 @@ skip-external-locking
 expire_logs_days        = 10
 
 # Bind address to allow external connections
-# bind-address            = 0.0.0.0
+bind-address            = 0.0.0.0
 
 [embedded]
 

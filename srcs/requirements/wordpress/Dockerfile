@@ -6,7 +6,7 @@ RUN apt-get update
 
 # Install php
 # RUN apt-get install php php-mysql php-fpm php-common php-curl -y
-RUN apt-get install php php-mysql php-fpm -y
+RUN apt-get install php php-mysql php-fpm mariadb-client -y
 
 # Install curl
 RUN apt-get install curl -y
@@ -19,6 +19,10 @@ RUN chmod +x wp-cli.phar
 
 # Adding the WP-CLI as executable in the Docker Container
 RUN mv wp-cli.phar /usr/local/bin/wp-cli
+
+# Creating folder for WordPress
+RUN mkdir /var/www/
+RUN mkdir /var/www/html
 
 # Copy the ENTRYPOINT Script that will be executed 
 COPY ./tools/entry_point_wordpress.sh /

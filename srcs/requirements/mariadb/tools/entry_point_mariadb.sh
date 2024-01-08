@@ -11,17 +11,20 @@ service mariadb start
 sleep 2
 
 # Create database for wordpress
-echo " (*) Creating ${WP_DATABASE_NAME} database ..."
-mysql -e "CREATE DATABASE IF NOT EXISTS $WP_DATABASE_NAME;"
+echo " (*) Creating ${DB_NAME} database ..."
+mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
 
 # Create user for wordpress database
-echo " (*) Creating user ${WP_USER_NAME} ... "
-# localhost o '%' ?
-mysql -e "CREATE USER '$WP_USER_NAME'@'%' IDENTIFIED BY '$WP_USER_PASSWORD';"
+echo " (*) Creating user ${DB_USER_NAME} ... "
+
+# mysql -e "DROP USER IF EXISTS '$WP_USERNAME';"
+# mysql -e "FLUSH PRIVILEGES;"
+mysql -e "CREATE USER '$DB_USER_NAME'@'%' IDENTIFIED BY '$DB_USER_PASSWORD';"
+
 
 # Grant privileges for wordpress user database to the wordpress database
-echo " (*) Grant privileges for ${WP_USER_NAME} on ${WP_DATABASE_NAME} ... "
-mysql -e "GRANT ALL PRIVILEGES ON $WP_DATABASE_NAME.* TO '$WP_USER_NAME'@'%' IDENTIFIED BY '$WP_USER_PASSWORD';"
+echo " (*) Grant privileges for ${DB_USER_NAME} on ${DB_NAME} ... "
+mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER_NAME'@'%' IDENTIFIED BY '$DB_USER_PASSWORD';"
 
 # Save the privileges 
 echo " (*) Flush privileges ... "
@@ -29,13 +32,15 @@ mysql -e "FLUSH PRIVILEGES;"
 
 # Set root password
 echo " (*) Setting root password ... "
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIADB_ROOT_USER_PASSWORD';"
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_USER_PASSWORD';"
 
 # Save the privileges
-mysql -uroot -p${MARIADB_ROOT_USER_PASSWORD} -e "FLUSH PRIVILEGES;"
+mysql -uroot -p${DB_ROOT_USER_PASSWORD} -e "FLUSH PRIVILEGES;"
 
-mysqladmin -uroot -p${MARIADB_ROOT_USER_PASSWORD} shutdown
+mysqladmin -uroot -p${DB_ROOT_USER_PASSWORD} shutdown
 
 echo "=> MariaDB database and user were created successfully! "
+
+cat /etc/mysql/mariadb.conf.d/50-server.cnf
 
 exec mysqld
