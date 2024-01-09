@@ -34,7 +34,16 @@ remove_images:
 		echo "\n$(BOLD)$(RED)No Docker volumes found.\n$(RESET)"; \
 	fi
 
-clean: remove_volumes remove_images
+remove_containers:
+	@if [ -n "$$(docker ps -aq)" ]; then \
+		echo "$(YELLOW)\n. . . stopping and removing docker containers . . . \n$(RESET)"; \
+		docker compose -f $(COMPOSE_FILE) down; \
+		echo "\n$(BOLD)$(GREEN)Containers stopped and removed [ ✔ ]\n$(RESET)"; \
+	else \
+		echo "\n$(BOLD)$(RED)No Docker containers found.$(RESET)\n"; \
+	fi
+
+clean: remove_volumes remove_containers remove_images
 	@echo "Inception cleaned $(GREEN)\t\t\t[ ✔ ]$(RESET)"
 	
 header:
