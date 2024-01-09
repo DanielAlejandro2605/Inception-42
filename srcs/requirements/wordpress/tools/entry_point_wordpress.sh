@@ -34,7 +34,7 @@ if [ ! -f "${WP_PATH}/wp-config.php" ]; then
                             --dbuser=${DB_USER_NAME}                \
                             --dbpass=${DB_USER_PASSWORD}            \
                             --dbhost=${DB_HOST}                     \
-                            --path=${WP_PATH}                  \
+                            --path=${WP_PATH}                       \
                             --allow-root
     echo "Done!"
 fi
@@ -48,4 +48,16 @@ wp-cli core install     --url=${WP_DOMAIN_NAME}                 \
                         --admin_email=${WP_ADMIN_EMAIL}         \
                         --allow-root
 
+# Creating WordPress user
+echo "Creating new user ($WP_USER)..."
+wp-cli user create ${WP_USER} ${WP_USER_EMAIL}                  \
+                        --user_pass=${WP_USER_PASSWORD}         \
+                        --role=${WP_USER_ROLE}                  \
+                        --allow-root
 echo "Done!"
+
+echo "Activating WordPress theme..."
+wp-cli theme activate twentytwentytwo --allow-root
+
+
+php-fpm7.4 -F -R

@@ -20,9 +20,12 @@ RUN chmod +x wp-cli.phar
 # Adding the WP-CLI as executable in the Docker Container
 RUN mv wp-cli.phar /usr/local/bin/wp-cli
 
-# Creating folder for WordPress
+# Creating folder for WordPress volumes inside the Container
 RUN mkdir /var/www/
 RUN mkdir /var/www/html
+
+# Creating folder for PHP-FPM Unix Socket
+RUN mkdir -p /run/php
 
 # Copy the config for general PHP request
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
