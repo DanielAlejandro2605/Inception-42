@@ -24,6 +24,9 @@ RUN mv wp-cli.phar /usr/local/bin/wp-cli
 RUN mkdir /var/www/
 RUN mkdir /var/www/html
 
+# Copy the config for general PHP request
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
+
 # Copy the ENTRYPOINT Script that will be executed 
 COPY ./tools/entry_point_wordpress.sh /
 

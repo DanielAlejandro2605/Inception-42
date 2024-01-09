@@ -20,6 +20,8 @@ services:
     ports:
       - 9000:9000
     env_file : .env
+    volumes:
+      - wordpress:/var/www/html
     networks:
       - inception
     depends_on:
@@ -38,4 +40,11 @@ volumes:
       type: none
       o: bind
       device: /home/daniel/data/mariadb
+  wordpress:
+    name : wordpress
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/daniel/data/wordpress
     
