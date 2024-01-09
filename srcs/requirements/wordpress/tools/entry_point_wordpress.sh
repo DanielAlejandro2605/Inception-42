@@ -57,7 +57,7 @@ wp-cli user create ${WP_USER} ${WP_USER_EMAIL}                  \
 echo "Done!"
 
 echo "Activating WordPress theme..."
-wp-cli theme activate twentytwentytwo --allow-root
+wp-cli theme activate twentytwentythree --allow-root
 
 
 php-fpm7.4 -F -R

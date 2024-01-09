@@ -19,9 +19,6 @@ RUN chmod +x /entry_point_mariadb.sh
 # For saving the PID and socket
 RUN	mkdir -p /run/mysqld && chown -R mysql:root /run/mysqld
 
-# Expose the default MariaDB port
-EXPOSE 3306
-
 # Lauch the script after the container is initiated. 
 ENTRYPOINT ["/entry_point_mariadb.sh"]
 

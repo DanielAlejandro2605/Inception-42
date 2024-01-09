@@ -36,5 +36,7 @@ COPY ./tools/entry_point_wordpress.sh /
 # Making the ENTRYPOINT Script executable
 RUN chmod +x /entry_point_wordpress.sh
 
+EXPOSE 9000
+
 # Lauch the script after the container is initiated. 
 ENTRYPOINT ["/entry_point_wordpress.sh"]
