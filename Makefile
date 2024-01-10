@@ -6,7 +6,7 @@ PATH_VOLUME_MARIADB=/home/daniel/data/mariadb
 
 all: header
 	@echo "Launching Inception ..."
-	# @docker compose -f $(COMPOSE_FILE) up --build -d
+	@docker compose -f $(COMPOSE_FILE) up --build -d
 
 stop:
 	@echo "Stopping Inception ..."

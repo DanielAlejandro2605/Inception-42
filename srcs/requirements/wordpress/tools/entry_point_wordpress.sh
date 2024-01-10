@@ -55,7 +55,7 @@ wp-cli core install     --url=${WP_DOMAIN_NAME}                 \
 
 
 check=$(wp-cli user list --field=user_login --allow-root | grep $WP_USER)
-if [ $check == $WP_USER ]; then
+if [ "$check" == $WP_USER ]; then
     echo "The user is already register!"
 else
     # Creating WordPress user
