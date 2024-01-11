@@ -65,12 +65,8 @@ RUN openssl req \
     -out /etc/ssl/certs/nginx-selfsigned.crt \
     -subj "/C=FR/ST=Ile-de-France/L=Paris/O=42/OU=42Paris/CN=dnieto-c.42.fr"
 
-
 # Copy config 
 COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 
-# Config index.html for test
-COPY ./tools/index.html /var/www/html/index.html
-
-
+# Lauching nginx daemon
 CMD ["nginx", "-g", "daemon off;"]

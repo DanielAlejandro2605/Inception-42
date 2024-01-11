@@ -2,8 +2,6 @@ SRCS_PATH = ./srcs/
 YML_FILE = docker-compose.yml
 COMPOSE_FILE = $(addprefix $(SRCS_PATH), $(YML_FILE))
 
-PATH_VOLUME_MARIADB=/home/daniel/data/mariadb
-
 all: header
 	@echo "Launching Inception ..."
 	@docker compose -f $(COMPOSE_FILE) up --build -d

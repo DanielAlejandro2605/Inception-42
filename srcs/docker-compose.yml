@@ -4,7 +4,7 @@ services:
   nginx:
     container_name : nginx
     build : ./requirements/nginx
-    image : nginx
+    image : nginx:inception
     ports :
       - 443:443
     env_file : .env
@@ -18,7 +18,7 @@ services:
   mariadb:
     container_name : mariadb
     build: ./requirements/mariadb
-    image: mariadb
+    image: mariadb:inception
     env_file : .env
     volumes:
       - mariadb:/var/lib/mysql
@@ -28,7 +28,7 @@ services:
   wordpress:
     container_name : wordpress
     build : ./requirements/wordpress
-    image: wordpress
+    image: wordpress:inception
     env_file : .env
     volumes:
       - wordpress:/var/www/html
@@ -49,12 +49,12 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/daniel/data/mariadb
+      device: /home/dnieto-c/data/mariadb
   wordpress:
     name : wordpress
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/daniel/data/wordpress
+      device: /home/dnieto-c/data/wordpress
     

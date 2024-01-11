@@ -39,8 +39,8 @@ COPY ./tools/download_file_list.txt /tmp/download_file_list.txt
 # Making the ENTRYPOINT Script executable
 RUN chmod +x /tmp/entry_point_wordpress.sh
 
-# Test without this!
-EXPOSE 9000
+# # Test without this!
+# EXPOSE 9000
 
 # Lauch the script after the container is initiated. 
 ENTRYPOINT ["/tmp/entry_point_wordpress.sh"]
