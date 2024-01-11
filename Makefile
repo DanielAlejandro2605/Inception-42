@@ -43,12 +43,23 @@ remove_containers:
 
 clean: remove_volumes remove_containers remove_images
 	@echo "Inception cleaned $(GREEN)\t\t\t[ ✔ ]$(RESET)"
-	
+
+
+prune:
+	@echo "$(YELLOW)\n Pruning docker environment... \n$(RESET)"
+	@docker system prune -fa
+	@echo "\n$(BOLD)$(GREEN)Pruned\t\t\t[ ✔ ]$(RESET)"
+
+fclean: clean prune
+
+re: fclean all
+
+
 header:
 	clear
 	@echo "$(BOLD) $(YELLOW) $$HEADER_PROJECT $(RESET)"
 
-.PHONY: all stop debug clean header
+.PHONY: all stop debug clean prune fclean re header
 
 define HEADER_PROJECT
 
