@@ -60,4 +60,3 @@ volumes:
       type: none
       o: bind
       device: /home/dnieto-c/data/wordpress
-    

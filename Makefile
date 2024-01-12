@@ -16,7 +16,7 @@ debug: clean
 
 remove_volumes:
 	@if [ -n "$$(docker volume ls -q)" ]; then \
-		echo "Removing docker volumes ..."; \
+		echo "Stopping and removing docker volumes ..."; \
 		docker compose -f $(COMPOSE_FILE) down --volumes; \
 		echo "Volumes removed $(GREEN)\t\t\t[ ✔ ]$(RESET)"; \
 	else \
@@ -25,7 +25,7 @@ remove_volumes:
 
 remove_images:
 	@if [ -n "$$(docker image ls -q)" ]; then \
-		echo "Removing docker images ..."; \
+		echo "Stopping and removing docker images ..."; \
 		docker compose -f $(COMPOSE_FILE) down --rmi all; \
 		echo "Images removed $(GREEN)\t\t\t\t[ ✔ ]$(RESET)"; \
 	else \
@@ -34,11 +34,11 @@ remove_images:
 
 remove_containers:
 	@if [ -n "$$(docker ps -aq)" ]; then \
-		echo "$(YELLOW)\n. . . stopping and removing docker containers . . . \n$(RESET)"; \
+		echo "$(YELLOW)\nStopping docker containers ... \n$(RESET)"; \
 		docker compose -f $(COMPOSE_FILE) down; \
-		echo "\n$(BOLD)$(GREEN)Containers stopped and removed [ ✔ ]\n$(RESET)"; \
+		echo "\n$(BOLD)$(GREEN)Containers stopped and removed\t\t\t[ ✔ ]\n$(RESET)"; \
 	else \
-		echo "\n$(BOLD)$(RED)No Docker containers found.$(RESET)\n"; \
+		echo "\n$(BOLD)$(RED)No Docker containers found.\n$(RESET)"; \
 	fi
 
 clean: remove_volumes remove_containers remove_images

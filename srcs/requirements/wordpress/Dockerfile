@@ -31,16 +31,13 @@ RUN mkdir -p /run/php
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 
 # Copy the ENTRYPOINT Script that will be executed 
-COPY ./tools/entry_point_wordpress.sh /tmp/entry_point_wordpress.sh
+COPY ./tools/entry_point_wordpress.sh /entry_point_wordpress.sh
 
 # Copy the list of the files
 COPY ./tools/download_file_list.txt /tmp/download_file_list.txt
 
 # Making the ENTRYPOINT Script executable
-RUN chmod +x /tmp/entry_point_wordpress.sh
-
-# # Test without this!
-# EXPOSE 9000
+RUN chmod +x /entry_point_wordpress.sh
 
 # Lauch the script after the container is initiated. 
-ENTRYPOINT ["/tmp/entry_point_wordpress.sh"]
+ENTRYPOINT ["/entry_point_wordpress.sh"]
