@@ -34,7 +34,7 @@ COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 COPY ./tools/entry_point_wordpress.sh /entry_point_wordpress.sh
 
 # Copy the list of the files
-COPY ./tools/download_file_list.txt /tmp/download_file_list.txt
+COPY ./tools/download_file_list.txt /download_file_list.txt
 
 # Making the ENTRYPOINT Script executable
 RUN chmod +x /entry_point_wordpress.sh

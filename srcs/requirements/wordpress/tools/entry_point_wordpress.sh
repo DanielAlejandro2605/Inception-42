@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the file which contains the list of downloaded files
-download_file_list_file="/tmp/download_file_list.txt"
+download_file_list_file="/download_file_list.txt"
 
 # Function to test if MariaDB is avalaible
 wait_for_mariadb() {
